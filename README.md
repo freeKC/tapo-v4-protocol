@@ -1,5 +1,7 @@
 # Tapo cameras: the new local protocol ("V4", SPAKE2+)
 
+[Version française](README.fr.md)
+
 My Tapo C510W stopped talking to pytapo / python-kasa / Home Assistant after a firmware
 update (fw 1.3.4). Every login attempt came back with `error_code -40211`. Discovery shows
 `encrypt_type: ["4"]`, and nothing public speaks that yet.
@@ -79,5 +81,10 @@ The media port format was first documented by [pytapo](https://github.com/JurajN
 
 I also built a small web app on top of this (live view, SD card browser, animal detection):
 [tapo-web](https://github.com/freeKC/tapo-web).
+
+Keywords, for people searching: TP-Link Tapo local API, Tapo error -40211, "Invalid authentication
+data", encrypt_type 4, pake_register, pake_share, SPAKE2+, TPAP, stok, /ds, AES-CCM, Tapo C510W,
+C500, C520WS, C51A, C210, C220, C225, C100, C110, C120, C125, C310, C320WS, Home Assistant Tapo
+Control, pytapo, python-kasa, Frigate, Scrypted, download Tapo SD card recordings, Tapo without cloud.
 
 MIT license.
