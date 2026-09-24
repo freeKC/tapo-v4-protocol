@@ -68,6 +68,17 @@ print(cam.get_device_info()["device_model"], cam.get_sd_status()["status"])
 print(cam.search_days("20260101", "20261231"))
 ```
 
+## If the login fails
+
+* `-40209` at `pake_register`: the username is wrong. It has to be the literal string `admin`,
+  not your e-mail, not the camera account name.
+* `-40401` at `pake_share`: the password is wrong. I checked on my camera, a wrong password gives
+  exactly that. The password is the one of your TP-Link account (the one you type in the Tapo
+  app), not the "camera account" you create for RTSP/ONVIF. The credential goes through
+  `md5_hex()` before PBKDF2, the client does that for you. Each failed try counts towards a
+  lockout, so don't loop over variants.
+* `dev_confirm mismatch` raised by the client: the maths went wrong somewhere, that would be a bug, please report it.
+
 ## Caveats
 
 * Tested on one camera only (C510W hardware 2.0, fw 1.3.4 Build 260523). If you try another
