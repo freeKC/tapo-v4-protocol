@@ -77,6 +77,13 @@ print(cam.search_days("20260101", "20261231"))
   app), not the "camera account" you create for RTSP/ONVIF. The credential goes through
   `md5_hex()` before PBKDF2, the client does that for you. Each failed try counts towards a
   lockout, so don't loop over variants.
+* still `-40401` with the right TP-Link password: your camera may be in "local access token"
+  mode. On some accounts the app no longer gives the camera the account password but a random
+  token it fetches from the TP-Link cloud (`localAccessToken` in the device list returned by
+  `GET /v2/things`, then pushed to the camera through the cloud relay). The app then logs in
+  with `sha256_hex(token)` instead of `md5_hex(password)`. The client supports that:
+  `TapoV4(host, token, credential_hash="sha256")`. I have not seen it on my own camera, so if
+  you get this working please tell me how you got the token.
 * `dev_confirm mismatch` raised by the client: the maths went wrong somewhere, that would be a bug, please report it.
 
 ## Caveats
