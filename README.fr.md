@@ -68,8 +68,8 @@ python -m pytest tests -q        # pas besoin de caméra
 
 ## Limites
 
-* Testé sur une seule caméra (C510W matériel 2.0, fw 1.3.4 Build 260523). Si vous essayez sur un
-  autre modèle, ouvrez un ticket pour me dire ce que ça donne.
+* Testé sur ma C510W (matériel 2.0, fw 1.3.4 Build 260523), et confirmé par un autre utilisateur
+  sur sa propre C510W 2.0 (ticket #1). Si vous essayez sur un autre modèle, ouvrez un ticket pour me dire ce que ça donne.
 * L'appli connaît d'autres variantes de connexion (noms d'utilisateur hachés, réutilisation de
   session, certificats sur les aspirateurs robots par exemple). J'ai noté ce que j'ai vu dans le
   code, mais ma caméra n'en a pas eu besoin.

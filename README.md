@@ -88,8 +88,8 @@ print(cam.search_days("20260101", "20261231"))
 
 ## Caveats
 
-* Tested on one camera only (C510W hardware 2.0, fw 1.3.4 Build 260523). If you try another
-  model, please open an issue and tell me how it went.
+* Tested on my C510W (hardware 2.0, fw 1.3.4 Build 260523), and confirmed by another user on
+  their own C510W 2.0 (issue #1). If you try another model, please open an issue and tell me how it went.
 * The app has more login flavours (hashed usernames, session reuse, device certificates on
   things like robot vacuums). I wrote down what I saw in the code, but my camera did not need them.
 * One media session at a time. A second one gets `-52405` ("device in use").
