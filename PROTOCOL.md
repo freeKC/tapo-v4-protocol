@@ -1516,7 +1516,7 @@ print(json.loads(d.decrypt_and_verify(raw[4:-16], raw[-16:])))
 | Code | Name / meaning | Status |
 |---|---|---|
 | `0` | success | ✅ |
-| `-40106` | `UNSUPPORTED_METHOD` (`common/CameraErrorCode.java:26`) - by its name, the code to expect per sub-request for an unknown method | 📖 |
+| `-40106` | `UNSUPPORTED_METHOD` (`common/CameraErrorCode.java:26`): the method name is not in this firmware. ✅ Observed per sub-request for `manualFloodlightOp` on the C510W (no floodlight). Not a session or permission issue: a `do` on a module the camera lacks (`msg_alarm` on the C510W) answers `-40210` instead. `getAppComponentList` tells which modules exist. 🌐 Recent firmware renamed the manual siren key `manual_msg_alarm` → `manual_alarm` (pytapo #205, TC46 1.1.10) | ✅ |
 | `-40109` | `ONE_SECOND_REPEAT_REQUEST` (`common/CameraErrorCode.java:27`) - by its name the firmware has a repeat-request limiter: do not poll | 📖 |
 | `-40209` | `INVALID_ARGUMENTS` (app debug enum, §5.3; 🌐 python-kasa uses the same name, pytapo / ioBroker call it "Invalid login credentials") - at login: unknown username; on `/ds`: decrypted fine but the inner request is not a `multipleRequest` | ✅ |
 | `-40210` | `PROTOCOL_FORMAT_ERROR` (the media layer names it `METHOD_DO_NOT_EXIST`) | 📖 |
