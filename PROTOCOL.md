@@ -1556,6 +1556,11 @@ None was triggered live.
 4. **One `/ds` request at a time** per session (seq must stay ordered); one seq per request, never reused.
 5. **The camera's Wi-Fi flaps** and it degrades under load: on `No route to host` / TLS timeouts
    wait 10-30 s; cache listings; do not poll. A power cycle clears transient lockouts.
+   A camera that keeps refusing `pake_share` after a session was left open may still hold
+   that session for an hour (`expired: 3600` in the login reply). 🌐 One user's second C510W
+   refused every login for a day; waiting 8 h, power cycling and unbinding from the account
+   did not help, only a factory reset (button under the cover next to the SD slot, 10 s) did.
+   Keep that as the very last resort since the camera has to be paired again.
 6. **ONE media session at a time**; after a clip send `do stop`, close, and wait ~1 s before the
    next session (the web app closes thumbnail sessions without `do stop` and without a pause -
    tolerated, §7.8).
