@@ -11,6 +11,12 @@ qu'elle réponde. Ce dépôt en est le résultat : une description complète du 
 client Python qui fonctionne vraiment avec ma caméra. Le même symptôme est signalé sur C51A 1.3.4,
 C220 1.4.4, C100 1.4.3/1.5.1 et C125 1.4.2, c'est sans doute la même histoire.
 
+**Mise à jour du 27 septembre 2026 :** tout ceci est maintenant dans [pytapo 3.4.20](https://github.com/JurajNyiri/pytapo/releases/tag/3.4.20)
+(nouveau login, téléchargement rapide, vignettes des enregistrements, option TS brut) et dans
+[Home Assistant Tapo Control 7.2.0](https://github.com/JurajNyiri/HomeAssistant-Tapo-Control/releases/tag/7.2.0).
+Si vous voulez seulement retrouver votre caméra dans Home Assistant, mettre à jour cette intégration
+peut suffire. La suite reste utile si vous voulez parler vous-même à la caméra.
+
 Ce qu'on trouve ici :
 
 * [`PROTOCOL.md`](PROTOCOL.md) : la spécification, à l'octet près (en anglais). C'est long, mais

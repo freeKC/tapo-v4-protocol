@@ -11,6 +11,12 @@ answered. This repo is the result: a full write-up of the protocol and a small P
 that really works against my camera. Same symptom has been reported on C51A 1.3.4, C220 1.4.4,
 C100 1.4.3/1.5.1 and C125 1.4.2, so it is probably the same story there.
 
+**Update, 27 September 2026:** this is now in [pytapo 3.4.20](https://github.com/JurajNyiri/pytapo/releases/tag/3.4.20)
+(new login, fast download, recording thumbnails, raw TS option) and in
+[Home Assistant Tapo Control 7.2.0](https://github.com/JurajNyiri/HomeAssistant-Tapo-Control/releases/tag/7.2.0),
+so if you only want your camera back in Home Assistant, updating that integration may be enough.
+The write-up below stays useful if you want to talk to the camera yourself.
+
 What is in here:
 
 * [`PROTOCOL.md`](PROTOCOL.md): the spec, byte level. Long, but everything is there. Each
