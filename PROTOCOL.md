@@ -1083,6 +1083,10 @@ a time per device, a task is dropped after 1 failed retry (`wb1/a.java:85-87,163
 - ✅ Several snapshots **in a row on one connection** work: send the next request after
   `finished` (~0.3 s each; opening a session costs ~1.5 s; 6 snapshots in 3.7 s).
 - ✅ `media_type: 3` returns a **live** snapshot (OSD = now), not the recording's.
+- 🌐 Recording thumbnails (`media_type: 2`) exist **only for event recordings**: on a C520WS
+  (fw 1.3.5) with continuous recording, timed segments (`video_type "1"`) get no image and the
+  camera stays silent until the client times out (pytapo maintainer, 2026-09-27). Filter on
+  `video_type` before asking.
 - ✅ **A connection is bound to the media type of its first request**: a video request sent on a
   connection that served a snapshot gets `response` `seq:2` with the **same** `session_id` and
   the snapshot JPEG again. Use separate connections for thumbnails and video.
