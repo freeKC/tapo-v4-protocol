@@ -68,8 +68,10 @@ python -m pytest tests -q        # pas besoin de caméra
 
 ## Limites
 
-* Testé sur ma C510W (matériel 2.0, fw 1.3.4 Build 260523), et confirmé par un autre utilisateur
-  sur sa propre C510W 2.0 (ticket #1). Si vous essayez sur un autre modèle, ouvrez un ticket pour me dire ce que ça donne.
+* Fonctionne sur ma C510W (matériel 2.0, fw 1.3.4 Build 260523), sur la C510W 2.0 d'un autre
+  utilisateur (ticket #1, connexion et listing de la carte SD), et sur deux C200 (hw 5.0, fw 1.4.6)
+  grâce à RBARC5, qui a aussi trouvé la variante `extra_crypt` / mot de passe en sha256 qu'elles
+  demandent (JurajNyiri/pytapo#218). Le client gère les deux. Si vous essayez sur un autre modèle, ouvrez un ticket pour me dire ce que ça donne.
 * L'appli connaît d'autres variantes de connexion (noms d'utilisateur hachés, réutilisation de
   session, certificats sur les aspirateurs robots par exemple). J'ai noté ce que j'ai vu dans le
   code, mais ma caméra n'en a pas eu besoin.

@@ -366,7 +366,20 @@ bytes as `L=32` truncated (block T(1) does not depend on L).
 HKDFParameters order (ikm, salt, info) `full9/pt1/g0.java:44-46`. The cipher is chosen
 from the `encryption` string of the **register result** (`em1/a.java:112`).
 
-### 4.5 Credential derivation variants 📖 (not needed here: this camera returns no `extra_crypt`)
+### 4.5 Credential derivation variants (this C510W returns no `extra_crypt`; ✅ on C200 hw 5.0 fw 1.4.6 by another user, see below)
+
+> **Confirmed on a Tapo C200 (hw 5.0, fw 1.4.6 Build 260709) by RBARC5, 2026-09-27** (two units,
+> running inside pytapo / Home Assistant): that camera answers `pake_register` with
+> `extra_crypt = {"type":"password_shadow","params":{"passwd_id":5,"passwd_prefix":"$5$<salt>$"}}`
+> and wants the passcode `sha256_hex_upper(cloud password)` (the app's third candidate; `md5_hex`
+> gets `-40401` there). The credential fed to PBKDF2 is then the full Unix SHA-256-crypt string
+> `$5$<salt>$<hash>` of that passcode with the camera's prefix (salt cut to 16 chars, `rounds=`
+> honoured). The username was sent as `md5_hex("admin")`; on the C510W the literal `admin` works.
+> Reference client: `TapoV4(host, pwd, credential_hash="sha256")`, `extra_crypt` handled
+> automatically (`sha256_crypt()` in `tapo_v4.py`, checked against the glibc test vectors).
+> Also observed by him: a fresh `pake_share` while the previous session is still alive gets
+> `-40401`; keep a session until `expired` (3600 s) runs out, then log in again once.
+
 
 `Spake2pRegisterResult.getSpake2pCredentials(user, passcode, mac)` (`Spake2pRegisterResult.java:64-77`,
 `Spake2pExtraCryptBean.java`):
@@ -1501,7 +1514,7 @@ print(json.loads(d.decrypt_and_verify(raw[4:-16], raw[-16:])))
 | `-40420` | `TPAP_SLP_AUTH_TAG_SIG_FAIL` (AEAD tag failure; this camera answers `-40401` instead) | 📖 |
 | `-40421` | `TPAP_SESSION_TOKEN_INVALID` - stok not accepted as a token; seen only for a percent-encoded stok (a garbage well-formed stok gave `-40401`, §5.3) | ✅ (`TESTS.md` B2) |
 | `-71101` / `-71102` / `-71103` | `USER_ID_FULL` / `USER_ID_EMPLOYED` / `USER_ID_INVALID`. `-71103`: `searchVideoWithUTC` called with `"id"` instead of `"player_id"` on a playback-v6 camera | `-71103` ✅, others 📖 |
-| `-71105` | 🌐 pytapo: refresh the user id and retry | 🌐 |
+| `-71105` | `searchDateWithVideo` refused a wide date range on a well filled card (another C510W user, 2026-09-26): ask month by month, `search_days()` does. 🌐 pytapo also maps it to "refresh the user id and retry" | ✅ 🌐 |
 | `-2402`, `-2004`, `-2001`, `-2101` | app-internal TLA codes that trigger its single re-login (`hm1/a0.java:111-120`) | 📖 |
 
 ### 10.2 Media port (stream layer) 📖

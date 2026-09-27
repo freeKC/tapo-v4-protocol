@@ -77,7 +77,9 @@ print(cam.search_days("20260101", "20261231"))
   app), not the "camera account" you create for RTSP/ONVIF. The credential goes through
   `md5_hex()` before PBKDF2, the client does that for you. Each failed try counts towards a
   lockout, so don't loop over variants.
-* still `-40401` with the right TP-Link password: your camera may be in "local access token"
+* still `-40401` with the right TP-Link password: first try `credential_hash="sha256"`, that is
+  what the C200 line wants (the client then also applies the `extra_crypt` those cameras send).
+  Failing that, your camera may be in "local access token"
   mode. On some accounts the app no longer gives the camera the account password but a random
   token it fetches from the TP-Link cloud (`localAccessToken` in the device list returned by
   `GET /v2/things`, then pushed to the camera through the cloud relay). The app then logs in
@@ -88,8 +90,9 @@ print(cam.search_days("20260101", "20261231"))
 
 ## Caveats
 
-* Tested on my C510W (hardware 2.0, fw 1.3.4 Build 260523), and confirmed by another user on
-  their own C510W 2.0 (issue #1). If you try another model, please open an issue and tell me how it went.
+* Works on my C510W (hardware 2.0, fw 1.3.4 Build 260523), on another user's C510W 2.0 (issue #1,
+  login and SD card listing), and on two C200 (hw 5.0, fw 1.4.6) thanks to RBARC5, who also found the
+  `extra_crypt` / sha256 passcode variant those need (JurajNyiri/pytapo#218). The client handles both. If you try another model, please open an issue and tell me how it went.
 * The app has more login flavours (hashed usernames, session reuse, device certificates on
   things like robot vacuums). I wrote down what I saw in the code, but my camera did not need them.
 * One media session at a time. A second one gets `-52405` ("device in use").

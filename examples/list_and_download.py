@@ -15,7 +15,7 @@ env = dotenv_values(".env")
 host, pwd = env["TAPO_HOST"], env["TAPO_CLOUD_PASSWORD"]
 cam = TapoV4(host, pwd)
 print("camera:", cam.get_device_info()["device_model"], "| SD:", cam.get_sd_status()["status"])
-days = sorted(cam.search_days("20200101", "20991231"))
+days = cam.search_days((dt.date.today() - dt.timedelta(days=365)).strftime("%Y%m%d"), dt.date.today().strftime("%Y%m%d"))
 print(len(days), "days with recordings, latest:", days[-1])
 day = dt.datetime.strptime(days[-1], "%Y%m%d")
 lo = int(day.timestamp())
