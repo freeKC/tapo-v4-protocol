@@ -84,12 +84,23 @@ Example result (real, from this camera):
   "ip": "192.168.0.50", "mac": "AA-BB-CC-DD-EE-FF",
   "mgt_encrypt_schm": { "is_support_https": true },
   "encrypt_type": ["4"],
+  "tpap": { "pake": [2], "tls": 1, "noc": 1, "port": 443 },
+  "encrypt_info": { "sym_schm": "AES", "key": "...", "data": "..." },
   "decrypted_data": { "http_port": 443, "sd_status": "normal", ... },
   "firmware_version": "1.3.4 Build 260523 Rel.33481n"
 }
 ```
 
-`encrypt_type: ["4"]` + no `tpap` object ⇒ **V4 over HTTPS on 443**, and
+✅ (2026-09-27, `kasa discover raw`) The raw UDP reply **does** carry the `tpap` object the
+app looks for: `pake: [2]` (password login, §4.1), `tls: 1` (HTTPS on `port` 443), `noc: 1`
+(the camera can do NOC attestation, §4.6, which the login never needed here), no `dac`.
+python-kasa's parsed `DiscoveryResult` drops unknown keys, which is why earlier dumps
+showed no `tpap`. `encrypt_info.sym_schm` still says `AES`, so a client that trusts it
+tries the V3 login and gets `-40211`. Note that a camera can advertise `["4"]` and still
+accept the V3 login (python-kasa's C101 fw 1.4.3 fixture was captured that way), so the
+robust rule is: try what the advertisement says, switch to V4 on `-40211`.
+
+`encrypt_type: ["4"]` + `tpap.tls: 1` ⇒ **V4 over HTTPS on 443**, and
 `sd_status: "normal"` ⇒ the SD card is present and healthy. Reproduce with:
 
 ```python
@@ -1608,8 +1619,8 @@ refused. The historical matrix is kept in `TESTS.md` §B2 (its "rules out" colum
 
 ### 12.3 Open questions (nothing below blocks the working client)
 
-- Does the raw TDP discovery reply (or `sub_method: discover`) of this camera contain a `tpap`
-  object? python-kasa showed none, yet the app only takes this path when it exists.
+- ~~Does the raw TDP discovery reply contain a `tpap` object?~~ Yes (§1, 2026-09-27); the
+  in-band `sub_method: discover` on the other hand is refused with `-40209`.
 - Do the app-exact login variants (hashed username, `encryption` list, stok reuse) behave
   differently from the literal `admin` login? Literal `admin` gives a fully working session.
 - Exact seq window: how far forward may seq jump, and is a replayed seq rejected with `-40401`?
