@@ -1587,9 +1587,11 @@ None was triggered live.
 13. Nothing in this spec writes to the SD card or to the camera configuration. `setLocalCtrl`
     would overwrite the PAKE verifier - do not call it.
 14. Do not run the Tapo app's recording browser during a download 🌐 (it interrupts the stream).
-15. 🌐 Alternative that avoids V4 altogether (reported fix for `-40211` on several 1.3.x/1.4.x
-    firmwares, not tried here): in the Tapo app toggle *Me → Tapo Lab / Third-Party Services →
-    Third-Party Compatibility* OFF then ON while on the camera's LAN; stock pytapo (V3) may then log in.
+15. ✅ Alternative that avoids V4 altogether: in the Tapo app, *Me → Tapo Lab / Third-Party
+    Services → Third-Party Compatibility* ON. Confirmed on this C510W (2026-09-27): `-40211`
+    to the V3 login in the morning, and the same evening, after the toggle was switched on,
+    python-kasa's stock AES login (TP-Link e-mail + cloud password) worked, while the V4 login
+    kept working too. It is an account setting, so it applies to every camera of the account.
 
 ---
 
