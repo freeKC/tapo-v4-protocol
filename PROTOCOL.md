@@ -1528,7 +1528,7 @@ print(json.loads(d.decrypt_and_verify(raw[4:-16], raw[-16:])))
 | `-40418` | `TPAP_AUTHENTICATION_FAILED` | 📖 |
 | `-40420` | `TPAP_SLP_AUTH_TAG_SIG_FAIL` (AEAD tag failure; this camera answers `-40401` instead) | 📖 |
 | `-40421` | `TPAP_SESSION_TOKEN_INVALID` - stok not accepted as a token; seen only for a percent-encoded stok (a garbage well-formed stok gave `-40401`, §5.3) | ✅ (`TESTS.md` B2) |
-| `-71101` / `-71102` / `-71103` | `USER_ID_FULL` / `USER_ID_EMPLOYED` / `USER_ID_INVALID`. `-71103`: `searchVideoWithUTC` called with `"id"` instead of `"player_id"` on a playback-v6 camera | `-71103` ✅, others 📖 |
+| `-71101` / `-71102` / `-71103` | `USER_ID_FULL` / `USER_ID_EMPLOYED` / `USER_ID_INVALID`. `-71103`: `searchVideoWithUTC` called with `"id"` instead of `"player_id"` on a playback-v6 camera. ✅ `-71102` to `getUserID` while another client holds the camera's user id (2026-09-28); the media port still accepted `client_id` 1 at the same time | `-71102`, `-71103` ✅, `-71101` 📖 |
 | `-71105` | `searchDateWithVideo` refused a wide date range on a well filled card (another C510W user, 2026-09-26): ask month by month, `search_days()` does. 🌐 pytapo also maps it to "refresh the user id and retry" | ✅ 🌐 |
 | `-2402`, `-2004`, `-2001`, `-2101` | app-internal TLA codes that trigger its single re-login (`hm1/a0.java:111-120`) | 📖 |
 
