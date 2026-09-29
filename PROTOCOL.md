@@ -921,7 +921,8 @@ gets from the cloud, `localAccessToken`; the media client then digests with `SHA
 `encrypt_type`; `lu0/dk.java:611-618`, `bu0/il.java:3913-3970`, decision logic in
 `LocalSecureSession.java:181-237`). The SPAKE2+ login is separate: it tries `md5(cloud password)` before
 the LAT (§4.5), so a camera in `LAT` mode can accept the control login and still refuse the media
-digest with the account password. 🌐 Seen on a C510W after a factory reset (tapo-v4-protocol#3).
+digest with the account password. 🌐 Seen on a C510W after a factory reset (tapo-v4-protocol#3);
+fixed by switching *Third-Party Compatibility* off and on in the app, then rebooting the camera.
 
 ✅ Reply `200` with a `Content-Type: multipart/mixed;boundary=--device-stream-boundary--`
 (take the device boundary from there, default `--device-stream-boundary--`) and a
