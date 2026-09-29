@@ -912,6 +912,17 @@ Authorization: Digest username="admin",realm="TP-Link IP-Camera",uri="/stream",a
 ```
 `cnonce` = any client string (reference: 24 random hex chars). All `md5_hex` are lowercase.
 
+📖 **Which password.** `hashed_pwd` is derived from the camera's *admin password*, which the app
+manages in one of two modes (`CameraPasswordMode`): `TP_PASSWORD` (admin password = TP-Link account
+password, the case above ✅) or `LAT` (admin password = a per-device *local access token* the app
+gets from the cloud, `localAccessToken`; the media client then digests with `SHA256_HEX_UPPER(lat)`,
+`isUseLat`, `src6/ka1/a.java:391-405`). The app moves a camera between modes with a cloud-relayed
+`changeAdminPassword` (`user_management` / `change_admin_password`, fields `old_passwd`, `passwd`,
+`encrypt_type`; `lu0/dk.java:611-618`, `bu0/il.java:3913-3970`, decision logic in
+`LocalSecureSession.java:181-237`). The SPAKE2+ login is separate: it tries `md5(cloud password)` before
+the LAT (§4.5), so a camera in `LAT` mode can accept the control login and still refuse the media
+digest with the account password. 🌐 Seen on a C510W after a factory reset (tapo-v4-protocol#3).
+
 ✅ Reply `200` with a `Content-Type: multipart/mixed;boundary=--device-stream-boundary--`
 (take the device boundary from there, default `--device-stream-boundary--`) and a
 **`Key-Exchange`** header: space-separated `key="value"` items, of which `nonce` and `username`
