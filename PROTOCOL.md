@@ -1166,7 +1166,8 @@ video PTS span (the reference stops at `(end − start) + 5 s`).
 | others (names only) | `change_audio`, `change_resolutions`, `change_streams`, `change_life_time`, `playback_add_channels:[int]`, `preview_add_channels:{channels,streams,resolutions}`, `remove_channels:[int]` | `…/stream/control/request/*.java`, `request/channel/*.java` |
 
 Other **get** requests that exist on this port (names only): `preview` (live; 🌐 go2rtc:
-`{"preview":{"audio":["default"],"channels":[0],"resolutions":["HD"]},"method":"get"}`), `talk`,
+`{"preview":{"audio":["default"],"channels":[0],"resolutions":["HD"]},"method":"get"}`; ✅ `resolutions` accepts only
+`"HD"` and `"VGA"` (app enum `Resolution`), an unknown name such as `"SD"` gets no reply at all), `talk`,
 `image`, `panorama`, `upload{for}`, `usr_def_audio`, `video_call`, `video_call_status`,
 `video_call_valid`. URI stream types: `image, preview, download, sdvod, talk, usr_def_audio`
 (`common/UriStreamType.java:6-11`).
