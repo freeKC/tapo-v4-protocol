@@ -73,6 +73,11 @@ different line numbers; the tree given is the one the line numbers belong to.
 
 ---
 
+✅ **TLS on 443** (C510W fw 1.3.4, `openssl s_client -tls1_2`, 2026-10-01): accepts only plain RSA
+key exchange (`AES256-GCM-SHA384`, `AES256-SHA256`, `AES128-GCM-SHA256`, `AES128-SHA256`) and
+**refuses ECDHE** as well as `AES256-SHA`. 🌐 Newer firmware of other models does the opposite
+(ECDHE only, python-kasa #1736), so a client should offer both families.
+
 ## 1. Discovery (confirms V4) - UDP 20002
 
 ✅ `python-kasa`'s discovery reaches the camera and returns its advertisement.
