@@ -1550,6 +1550,14 @@ print(json.loads(d.decrypt_and_verify(raw[4:-16], raw[-16:])))
 | `-71105` | `searchDateWithVideo` refused a wide date range on a well filled card (another C510W user, 2026-09-26): ask month by month, `search_days()` does. 🌐 pytapo also maps it to "refresh the user id and retry" | ✅ 🌐 |
 | `-2402`, `-2004`, `-2001`, `-2101` | app-internal TLA codes that trigger its single re-login (`hm1/a0.java:111-120`) | 📖 |
 
+**White light (spotlight) on the C510W** 🌐✅: there is no `manual_floodlight_op` on this model; the
+light is driven through the `image` module.
+`{"method":"getWhitelampStatus","params":{"image":{"get_wtl_status":["null"]}}}` ✅ returns
+`{"status":0|1,"rest_time":<s>}` (read here 2026-10-04: `status 0, rest_time 0`), and
+`{"method":"reverseWhitelampStatus","params":{"image":{"reverse_wtl_status":["null"]}}}` 🌐 toggles it
+(reported working by a C510W owner, tapo-v4-protocol#2; not triggered here). Same request bodies as pytapo.
+
+
 ### 10.2 Media port (stream layer) 📖
 
 Arrive in a response's `params.error_code`, or as the JSON body of an **HTTP 503** to the POST
